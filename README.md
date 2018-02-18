@@ -9,9 +9,7 @@ This approach combines the advantages of the DDQN algorithm (experience replay a
 - Models.py: Neural networks for actor, critic and target networks
 Actor Model    |  Critic Model
 :-------------------------:|:-------------------------:
-<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Actor_model.png" alt=" " width="300" height="300"> | <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Critic_model.png" alt=" " width="300" height="300">
-
-
+<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Actor_model.png" alt=" " width="250" height="250"> | <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Critic_model.png" alt=" " width="250" height="250">
 
 - main.py: configure, train, test, display, store, load
 - ReplayBuffer.py: Memory buffer for experience replay of stored s,a,r,s_ tuples
