@@ -9,10 +9,10 @@ This approach combines the advantages of the DDQN algorithm (experience replay a
 - Models.py: Neural networks for actor, critic and target networks
 Actor Model    |  Critic Model
 :-------------------------:|:-------------------------:
-<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Actor_model.png" alt=" " width="250" height="250"> | <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Critic_model.png" alt=" " width="250" height="250">
+<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Actor_model.png" alt=" " width="300" height="300">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Critic_model.png" alt=" " width="300" height="300">
 
 - main.py: configure, train, test, display, store, load
-- ReplayBuffer.py: Memory buffer for experience replay of stored s,a,r,s_ tuples
+- ReplayBuffer.py: Memory buffer for experience replay of stored s,a,r,s' tuples
 - TempConfig.py: utils
 
 - Env.py: The algorithm was first validated on the pendulum-v0 game of gym open-ai and then applied on a customized Environement EnvPlant.py, simulating a temperature model.
