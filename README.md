@@ -7,6 +7,7 @@ great blog from https://github.com/yanpanlau/DDPG-Keras-Torcs.
 This approach combines the advantages of the DDQN algorithm (experience replay and target networks) with the actor-critic structure enabling to output continuous actions.
 - OU.py: exploration is done by Ornstein-Uhlenbeck process wich has the convenient mean reverting property. 
 - Models.py: Neural networks for actor, critic and target networks
+
 Actor Model    |  Critic Model
 :-------------------------:|:-------------------------:
 <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Actor_model.png" alt=" " width="300" height="300">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/DDPG_Critic_model.png" alt=" " width="300" height="300">
