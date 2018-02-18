@@ -20,6 +20,6 @@ Actor Model    |  Critic Model
 
 - Env.py: Environment simulating a temperature model and implementing the usual gym open-ai methods for easy interfacing.
 The Reward calculation is kept as simple as possible and is just the normalized squared error between the real plant temperature and the output of the model:
-<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/Env_Plant.png" alt=" " width="300" height="300"> 
+<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/Env_Plant.png" alt=" " width="600" height="400"> 
 
 
