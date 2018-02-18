@@ -26,4 +26,4 @@ The Reward calculation is kept as simple as possible and is just the normalized 
 Based on the observation of the 5 inputs, the DDPG learns to "play" the model and to fit the temperature to the real one:
 Modeled Temperature    |  Reward over time (500 is the maximum)
 :-------------------------:|:-------------------------:
-<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/Plant_DDQN_Render_cp_4188360.png" alt=" " width="300" height="300">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/RL_DDPG_Plant5.png" alt=" " width="300" height="300">
+<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/Plant_DDQN_Render_cp_4188360.png" alt=" " width="500" height="500">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/RL_DDPG_Plant5.png" alt=" " width="500" height="500">
