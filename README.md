@@ -28,3 +28,6 @@ Based on the observation of the 5 inputs, the DDPG learns to "play" the model an
 Modeled Temperature    |  Reward over time (500 is the maximum)
 :-------------------------:|:-------------------------:
 <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/Plant_DDQN_Render_cp_4188360.png" alt=" " width="450" height="500">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/RL_DDPG_Plant5.png" alt=" " width="450" height="500">
+
+## Results:
+Instead of the usual black-box model of the whole plant, this approach proved it is possible to interpolate specific parameters of the model as a white-box. The stability of the learning is remarkable and longer training would improve further the accuracy. Interestingly, it appeared that the solution of the problem is not unique as the algorithm finds its own way of coordinating the two actions that is different than that of the real plant.  
