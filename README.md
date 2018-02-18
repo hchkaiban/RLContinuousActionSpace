@@ -1,5 +1,5 @@
 # RLContinuousActionSpace
-Reinforcement Learning in with continuous states and actions spaces. DDPG: Double Deep Policy Gradient and A3C: Asynchronous Actor-Critic Agents
+Reinforcement Learning in continuous state and action spaces. DDPG: Double Deep Policy Gradient and A3C: Asynchronous Actor-Critic Agents
 
 1° DDPG: 
 
