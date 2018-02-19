@@ -30,3 +30,18 @@ Modeled Temperature    |  Reward over time (500 is the maximum)
 <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/Plant_DDQN_Render_cp_4188360.png" alt=" " width="450" height="500">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_DDPG/KerasModels/RL_DDPG_Plant5.png" alt=" " width="450" height="500">
 ### Results:
 Instead of the usual black-box model of the whole plant, this approach proved it is possible to interpolate specific parameters of the model as a white-box. The stability of the learning is remarkable and longer training would improve further the accuracy. Interestingly, it appeared that the solution of the problem is not unique as the algorithm finds its own way of coordinating the two actions that is different than that of the real plant.  
+
+### 2° A3C: 
+
+Based on https://github.com/MorvanZhou/ 's implementation. In continuous action space, the actor (of the global network) learns the mean and standard deviation of a normal distribution then used as policy to sample the action in a given state. Entropy is added to the actor's loss function as regularizer and to encourage exploration. The number of asynchronous workers is configurable (optimally one per CPU). For a good introduction see https://jaromiru.com/2017/03/26/lets-make-an-a3c-implementation/ 
+
+![Tensorboard Graph](https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_A3C/KerasModels/A3C_TensorBoardGraph.png)
+
+Modeled Temperature    |  Reward over time (500 is the maximum)
+:-------------------------:|:-------------------------:
+<img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_A3C/KerasModels/Plant_A3C_Render1.png" alt=" " width="450" height="500">  |  <img src="https://github.com/hchkaiban/RLContinuousActionSpace/blob/master/RL_A3C/KerasModels/RL_A3C_Plant1.png" alt=" " width="450" height="500">
+### Results:
+Instead of
+
+
+
