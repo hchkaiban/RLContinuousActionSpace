@@ -1,8 +1,6 @@
 """
-Asynchronous Advantage Actor Critic (A3C) with continuous action space, 
 Reinforcement Learning.
-Based on https://morvanzhou.github.com
-
+A3C with continuous action space.
 """
 #tensorboard --logdir="./log" --port6006
 import math
@@ -20,26 +18,25 @@ LoadWeithsAndTest = False
 OUTPUT_GRAPH = True
 LOG_DIR = './log'
 N_WORKERS = multiprocessing.cpu_count()
-MAX_GLOBAL_EP = 40000
+MAX_GLOBAL_EP = 160000
 GLOBAL_NET_SCOPE = 'Global_Net'
 UPDATE_GLOBAL_ITER = 5
 GAMMA = 0.9
-ENTROPY_BETA = 0.5#0.01
-LR_A = 0.00001    # learning rate for actor
-LR_C = 0.0001     # learning rate for critic
+ENTROPY_BETA = 0.5	#0.01
+LR_A = 0.00001    	# learning rate for actor
+LR_C = 0.0001    	# learning rate for critic
 GLOBAL_EP = 0
-STATE_NORM = (10, 1)    #Normalize observations: (1/gain, offset)
+STATE_NORM = (10, 1) #Normalize observations: (1/gain, offset)
 
 env = Plant()
-
 MAX_EPSILON = ENTROPY_BETA
 MIN_EPSILON = 0.001
+
 EXPLORATION_STOP = int(400 * env.Plant_MaxSteps)    # at this step epsilon will be MIN_EPSILON
 LAMBDA = - math.log(0.01) / EXPLORATION_STOP        # speed of decay fn of episodes of learning agent
 
 N_S = env.observation_space.shape[0]
 N_A = env.action_space.shape[0]
-
 ACTION_BOUND = env.ACTION_BOUND 
 ACTION_GAP = env.ACTION_GAP
 
@@ -115,13 +112,14 @@ class ACNet(object):
                 with tf.name_scope('wrap_a_out'):
                     mu, sigma = mu * ACTION_GAP + ACTION_BOUND, sigma * ACTION_GAP * 0.05 + 1e-4
 
-                normal_dist = tf.distributions.Normal(mu, sigma)
+                    
+                normal_dist =  tf.distributions.Normal(mu, sigma)
 
                 with tf.name_scope('a_loss'):
                     log_prob = normal_dist.log_prob(self.a_his)
-                    exp_v = log_prob * tf.stop_gradient(td)
+                    exp_v = 0.5*(log_prob) * tf.stop_gradient(td)
                     entropy = normal_dist.entropy()  # encourage exploration
-                    
+
                     self.exp_v = self.epsilon[-1] * entropy + exp_v
                     self.a_loss = tf.reduce_mean(-self.exp_v)
 
@@ -149,18 +147,16 @@ class ACNet(object):
         with tf.variable_scope('actor'):
             l_a = tf.layers.dense(self.s, 500, tf.nn.tanh, kernel_initializer=w_init, name='la')
             l_a = tf.layers.dense(l_a, 500, tf.nn.tanh, kernel_initializer=w_init1, name='la_')
-            l_a = tf.layers.dense(l_a, 500, tf.nn.tanh, kernel_initializer=w_init2, name='la__')
-            #l_a = tf.layers.dense(l_a, 1000, tf.nn.tanh, kernel_initializer=w_init2, name='la___')
+            l_a1 = tf.layers.dense(l_a, 500, tf.nn.tanh, kernel_initializer=w_init2, name='la__')
+            l_a = tf.layers.dense(l_a1, 500, tf.nn.tanh, kernel_initializer=w_init2, name='la___')
             #l_a = tf.layers.dense(l_a, 200, tf.nn.tanh, kernel_initializer=w_init2, name='la____')
             mu = tf.layers.dense(l_a, N_A, tf.nn.tanh, kernel_initializer=w_init, name='mu')
             sigma = tf.layers.dense(l_a, N_A, tf.nn.tanh, kernel_initializer=w_init1, name='sigma') #tf.nn.softplus
+
         with tf.variable_scope('critic'):
-            l_c = tf.layers.dense(self.s, 300, tf.nn.tanh, kernel_initializer=w_init3, name='lc')
-            l_c = tf.layers.dense(l_c, 300, tf.nn.tanh, kernel_initializer=w_init1, name='lc_')
-            l_c = tf.layers.dense(l_c, 300, tf.nn.tanh, kernel_initializer=w_init2, name='lc__')
-            #l_c = tf.layers.dense(l_c, 120, tf.nn.tanh, kernel_initializer=w_init2, name='lc___')
-            #l_c = tf.layers.dense(l_c, 120, tf.nn.tanh, kernel_initializer=w_init2, name='lc____')
-            v = tf.layers.dense(l_c, 1, kernel_initializer=w_init, name='v')  # state value
+            #l_c = tf.layers.dense(self.s, 300, tf.nn.tanh, kernel_initializer=w_init3, name='lc')
+            #l_c = tf.layers.dense(l_c, 300, tf.nn.tanh, kernel_initializer=w_init1, name='lc_')
+            v = tf.layers.dense(l_a1, 1, kernel_initializer=w_init3, name='v')  # state value
         a_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope + '/actor')
         c_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope + '/critic')
         return mu, sigma, v, a_params, c_params
@@ -258,7 +254,7 @@ class Worker(object):
                     break
 
 class Worker_test(object):
-    ''' Worker for laoding and testing weithts after training '''
+    ''' Worker for testing after training '''
     def __init__(self, sess, name, globalAC, a_p, c_p):
         self.env = Plant()
         self.name = name
@@ -269,8 +265,8 @@ class Worker_test(object):
     def pull_global(self, sess):  
         sess.run([self.AC.pull_a_params_op, self.AC.pull_c_params_op])                            
 
-def Test_Agent(sess, worker, render=False):            
-    ''' Function for testing trained policiy '''
+def Test_Agent(sess, worker, render=False):
+    ''' Function for testing trained policy '''            
     total_reward = 0; Act1 = []; Act2 = []
     s_t = worker.env.reset()
     s_t = normalize_s(s_t)
@@ -303,8 +299,8 @@ if __name__ == "__main__":
     f, ax = plt.subplots(4,1)
     unique_mutex = threading.Lock()
     try:  
-        if LoadWeithsAndTest == False:
-            # Train network 
+        if LoadWeithsAndTest == False:   
+            # Train network 	 
             with tf.device("/cpu:0"):
                 OPT_A = tf.train.RMSPropOptimizer(LR_A, name='RMSPropA')
                 OPT_C = tf.train.RMSPropOptimizer(LR_C, name='RMSPropC')
@@ -353,7 +349,8 @@ if __name__ == "__main__":
             #graph = tf.get_default_graph()
             SESS.run(tf.global_variables_initializer())
             
-            #op_to_restore = graph.get_name_scope()            
+            #op_to_restore = graph.get_name_scope()
+            
             #GlobalNet_Params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=GLOBAL_NET_SCOPE)
             a_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=GLOBAL_NET_SCOPE + '/actor')
             c_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=GLOBAL_NET_SCOPE + '/critic')
