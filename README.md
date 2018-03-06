@@ -1,6 +1,8 @@
 # RLContinuousActionSpace
 Reinforcement Learning in continuous state and action spaces. DDPG: Deep Deterministic Policy Gradient and A3C: Asynchronous Actor-Critic Agents
 
+Note: the environment is an arbitrary combination of randomly filled look-up tables and constants that mimics a physical model. 
+
 ### 1° DDPG: 
 
 Based on Continuous Control with Deep Reinforcement Learning: https://arxiv.org/pdf/1509.02971.pdf and 
