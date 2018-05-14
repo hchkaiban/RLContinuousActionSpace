@@ -3,7 +3,7 @@
 """
 Created on Wed Jan 17 13:44:06 2018
 
-@author: uidr8963
+@author: hc
 """
 import numpy as np
 from scipy.interpolate import interp1d, interp2d
